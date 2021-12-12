@@ -11,15 +11,25 @@
 <body>
     <!-- Header -->
     <header>
-        <a href="#">View high scores</a>
-        <p>Time</p>
+        <a href="#" id="q-scoreboard">View high scores</a>
+        <p id="q-time">Time</p>
     </header>
     <!-- Main -->
     <main>
         <!-- Question Area -->
-        <h2>Coding Quiz Challenge</h2>
-        <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
-        <button>Start Quiz</button>
+        <h2 id="q-headline">Coding Quiz Challenge</h2>
+        <div>
+            <p id="q-text">
+                Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!
+                <ul>
+                    <li><button class="qanswer" id="q-answer">1. Correct</button></li>
+                    <li><button class="qanswer" id="q-answer">2. Wrong</button></li>
+                    <li><button class="qanswer" id="q-answer">3. Wrong</button></li>
+                    <li><button class="qanswer" id="q-answer">4. Wrong</button></li>
+                </ul>
+            </p>
+        </div>
+        <button class="qstart" id="q-start">Start Quiz</button>
     </main>
     <!-- Footer -->
     <footer>
