@@ -31,9 +31,9 @@ var questionObj = {
     ],
     // Wrong answers nested array
     wrongAnswers:  [
-        { q1WA: ["Test Q1A1", "Test Q1A2", "Test Q1A3"]},
-        { q2WA: ["Test Q2A1", "Test Q2A2", "Test Q2A3"]},
-        { q3WA: ["Test Q3A1", "Test Q3A2", "Test Q3A3"]}
+        ["Test Q1A1", "Test Q1A2", "Test Q1A3"],
+        ["Test Q2A1", "Test Q2A2", "Test Q2A3"],
+        ["Test Q3A1", "Test Q3A2", "Test Q3A3"]
     ],
     // Correct answers array
     correctAnswers: [
@@ -60,32 +60,53 @@ var dockTime = function() {
 }
 
 // Evaluate answer to see if correct or wrong
-var evaluateAnswer = function(event) {
-    if (event) {
-        console.log("Answer was correct");
+var evaluateAnswer = function(isCorrect) {
+    if (isCorrect === "correct") {
         updateScore();
-    } else {
-        console.log("Answer was wrong");
+    } else {   
         dockTime();
     }
-    getQuestion(questionsAnswered+1);
+    
+    getQuestion(questionsAnswered+=1);
 }
 
 // Serve up next question
 var getQuestion = function(questionsAnswered) {
+    // Get number of questions from bank
     var questionsNum = questionObj.questionBank.length;
 
-    if (questionsAnswered<(questionsNum+1)) {
-        console.log("Question #" + (questionsAnswered+1));
+    // Ask question if there are questions in the bank
+    if (questionsAnswered<questionsNum) {
+        console.log("Question #" + questionsAnswered);
+        // Get wrong answer for question from questionObj
+        wrongAnsBank = questionObj.wrongAnswers[questionsAnswered];
+
         questionHeadlinEl.textContent = questionObj.questionBank[questionsAnswered];
         questionBodyEl.textContent = "Make your selection from the choices below.";
+        cAnswerEl.textContent = questionObj.correctAnswers[questionsAnswered];
+        wrongAnswerEl1.textContent = wrongAnsBank[0];
+        wrongAnswerEl2.textContent = wrongAnsBank[1];
+        wrongAnswerEl3.textContent = wrongAnsBank[2];
 
-        cAnswerEl.addEventListener("click", evaluateAnswer, true);
-        wrongAnswerEl1.addEventListener("click", evaluateAnswer, false);
-        wrongAnswerEl2.addEventListener("click", evaluateAnswer, false);
-        wrongAnswerEl3.addEventListener("click", evaluateAnswer, false);
+        cAnswerEl.addEventListener("click", function() {
+            evaluateAnswer("correct");
+            console.log("Answer was correct");
+        });
+        wrongAnswerEl1.addEventListener("click", function() {
+            evaluateAnswer("wrong1");
+            console.log("Answer was wrong");
+        });
+        wrongAnswerEl2.addEventListener("click", function() {
+            evaluateAnswer("wrong2");
+            console.log("Answer was wrong");
+        });
+        wrongAnswerEl3.addEventListener("click", function() {
+            evaluateAnswer("wrong3");
+            console.log("Answer was wrong");
+        });
 
     } else {
+        // No more questions in bank
         console.log("Game Over");
         return false;
     }
