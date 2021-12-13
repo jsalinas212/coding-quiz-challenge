@@ -2,6 +2,8 @@
 
 Coding quiz will test your knowledge of JavaScript. You can retake the test to see how you improve.
 
+![Screen Capture](./assets/images/screen-cap.png)
+
 ## Built With
 
 - HTML
@@ -10,7 +12,7 @@ Coding quiz will test your knowledge of JavaScript. You can retake the test to s
 
 # Website URL
 
-(Coding Quiz)[https://jsalinas212.github.io/coding-quiz-challenge/]
+[Coding Quiz](https://jsalinas212.github.io/coding-quiz-challenge/)
 
 ## Author
 
