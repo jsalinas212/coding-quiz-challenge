@@ -51,6 +51,10 @@ main ul {
     margin-top: 24px;
 }
 
+.qstart:hover {
+    background-color: hotpink;
+}
+
 /* Question Styles */
 .question-items {
     display: flex;
@@ -72,6 +76,10 @@ main ul {
     margin-top: 24px;
     width: 300px;
     text-align: left;
+}
+
+.qanswer:hover {
+    background-color: hotpink;
 }
 
 /* Footer Styles */

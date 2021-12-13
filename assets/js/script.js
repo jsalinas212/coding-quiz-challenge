@@ -16,15 +16,19 @@ var wrongAnswerEl1 = document.createElement("li");
 var wrongAnswerEl2 = document.createElement("li");
 var wrongAnswerEl3 = document.createElement("li");
 
-
-cAnswerEl.id = "c-answer";
-cAnswerEl = document.querySelector("#c-answer");
-wrongAnswerEl1 = document.querySelector("#w-answer1");
+cAnswerEl.cl = "c-answer";
 wrongAnswerEl1.id = "w-answer1";
-wrongAnswerEl2 = document.querySelector("#w-answer2");
 wrongAnswerEl2.id = "w-answer2";
-wrongAnswerEl3 = document.querySelector("#w-answer3");
 wrongAnswerEl3.id = "w-answer3";
+cAnswerEl.className = "qanswer";
+wrongAnswerEl1.className = "qanswer";
+wrongAnswerEl2.className = "qanswer";
+wrongAnswerEl3.className = "qanswer";
+
+// cAnswerEl = document.querySelector("#c-answer");
+// wrongAnswerEl1 = document.querySelector("#w-answer1");
+// wrongAnswerEl2 = document.querySelector("#w-answer2");
+// wrongAnswerEl3 = document.querySelector("#w-answer3");
 
 // Footer element
 var footerContentEl = document.querySelector("footer");
@@ -137,6 +141,12 @@ var getQuestion = function(questionCount) {
         questionHeadlinEl.textContent = questionObj.questionBank[questionCount];
         questionBodyEl.textContent = "Make your selection from the choices below.";
 
+        // Add answer choices
+        answerListEl.appendChild(cAnswerEl);
+        answerListEl.appendChild(wrongAnswerEl1);
+        answerListEl.appendChild(wrongAnswerEl2);
+        answerListEl.appendChild(wrongAnswerEl3);
+
         // Update answer choice text
         cAnswerEl.textContent = questionObj.correctAnswers[questionCount];
         wrongAnswerEl1.textContent = wrongAnsBank[0];
@@ -159,7 +169,8 @@ var startQuiz = function(event) {
 
 // Retry quiz
 var tryAgain = function() {
-    console.log("Score: " + score);
+    questionHeadlinEl.textContent = "Your Score: " + score;
+    questionBodyEl.textContent = "Enter your initials and click submit.";
     console.log("Try again?");
     quizTimerEl.textContent = "Time";
 }
