@@ -24,12 +24,17 @@ main {
     margin-top: 60px;
 }
 
+main ul {
+    width: 750px;
+}
+
 main h2 {
     font-size: 32px;
 }
 
 main p {
     font-size: 18px;
+    flex-basis: 100%;
 }
 
 main ul {
@@ -65,6 +70,8 @@ main ul {
     font-weight: bold;
     font-size: 16px;
     margin-top: 24px;
+    width: 300px;
+    text-align: left;
 }
 
 /* Footer Styles */
@@ -76,6 +83,7 @@ footer {
 footer h3 {
     border-top: 1px solid grey;
     font-style: italic;
+    font-size: 24px;
     color: grey;
     padding-top: 20px;
 }
