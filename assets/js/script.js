@@ -1,7 +1,7 @@
 // Pull elements by IDs and store in variables
 
 // Header elements
-var quizScoreBoardEl = document.querySelector("#q-scoreboard");
+var quizquizEndEl = document.querySelector("#q-quizEnd");
 var quizTimerEl = document.querySelector("#q-time");
 
 // Question elements
@@ -16,19 +16,23 @@ var wrongAnswerEl1 = document.createElement("li");
 var wrongAnswerEl2 = document.createElement("li");
 var wrongAnswerEl3 = document.createElement("li");
 
+// Answer element IDs
 cAnswerEl.cl = "c-answer";
 wrongAnswerEl1.id = "w-answer1";
 wrongAnswerEl2.id = "w-answer2";
 wrongAnswerEl3.id = "w-answer3";
+
+// Answer element classes
 cAnswerEl.className = "qanswer";
 wrongAnswerEl1.className = "qanswer";
 wrongAnswerEl2.className = "qanswer";
 wrongAnswerEl3.className = "qanswer";
 
-// cAnswerEl = document.querySelector("#c-answer");
-// wrongAnswerEl1 = document.querySelector("#w-answer1");
-// wrongAnswerEl2 = document.querySelector("#w-answer2");
-// wrongAnswerEl3 = document.querySelector("#w-answer3");
+// Form element
+var formEl = document.createElement("form");
+
+// Form element id
+formEl.id = "quiz-form";
 
 // Footer element
 var footerContentEl = document.querySelector("footer");
@@ -50,6 +54,22 @@ var startTimer = function() {
         }
         quizTimer -= 1;
     }, 1000);
+}
+
+// Form handler to submit score
+var submitScore = function(event) {
+    event.preventDefault();
+    var initialsInput = document.querySelector("input[name='form-input']").value;
+
+    if (!initialsInput) {
+        alert("Please type your initials!");
+        return false;
+    }
+}
+
+// Build Scoreboard
+var scoreBoard = function() {
+
 }
 
 // Create question object
@@ -139,7 +159,7 @@ var getQuestion = function(questionCount) {
 
         // Update question headline and body text
         questionHeadlinEl.textContent = questionObj.questionBank[questionCount];
-        questionBodyEl.textContent = "Make your selection from the choices below.";
+        questionBodyEl.textContent = "";
 
         // Add answer choices
         answerListEl.appendChild(cAnswerEl);
@@ -156,7 +176,7 @@ var getQuestion = function(questionCount) {
     } else {
         // No more questions in bank
         quizTimer = 0;
-        tryAgain();
+        quizEnd();
     }
 }
 
@@ -168,14 +188,32 @@ var startQuiz = function(event) {
 }
 
 // Retry quiz
-var tryAgain = function() {
+var quizEnd = function() {
+    // Display score
     questionHeadlinEl.textContent = "Your Score: " + score;
     questionBodyEl.textContent = "Enter your initials and click submit.";
-    console.log("Try again?");
-    quizTimerEl.textContent = "Time";
-}
 
-// Build scoreboard
+    // Reset time text
+    quizTimerEl.textContent = "Time";
+
+    // Remove answer list
+    answerListEl.remove();
+
+    // Add form to question body
+    questionBodyEl.appendChild(formEl);
+
+    // Add input and submit button
+    formEl.innerHTML += "<input class='form-input' type='text' name='initials' placeholder='Enter Initials'>";
+    formEl.innerHTML += "<br />";
+    formEl.innerHTML += "<button class='form-button' id='go-back'>Go Back</button>";
+    formEl.innerHTML += "<button class='form-button' id='submit-score'>Submit</button>";
+
+    // Add event listeners to form buttons
+    document.querySelector("#go-back").addEventListener("click", function() {
+        location.reload();
+    });
+    document.querySelector("#submit-score").addEventListener("click", submitScore);
+}
 
 // Store score in local storage
 
