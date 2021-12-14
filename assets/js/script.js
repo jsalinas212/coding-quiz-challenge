@@ -32,7 +32,7 @@ wrongAnswerEl3.className = "qanswer";
 var formEl = document.createElement("form");
 
 // Form element id
-formEl.id = "quiz-form";
+formEl.id = "submit-score";
 
 // Footer element
 var footerContentEl = document.querySelector("footer");
@@ -42,6 +42,8 @@ var questionCount = 0;
 var quizTimer = 120;
 var timeLimit;
 var score = 0;
+let scores = [];
+let names = [];
 
 // Build timer
 var startTimer = function() {
@@ -57,19 +59,63 @@ var startTimer = function() {
 }
 
 // Form handler to submit score
-var submitScore = function(event) {
-    event.preventDefault();
-    var initialsInput = document.querySelector("input[name='form-input']").value;
+var submitScore = function(score, name) {
 
-    if (!initialsInput) {
+    // Make sure input is not empty
+    if (!name) {
         alert("Please type your initials!");
         return false;
     }
+
+    // Get scores function call
+    getScores(score);
+    // Get names function call
+    getNames(name);
+
+    // Set scores and names to local storage
+    localStorage.setItem("scores", scores);
+    localStorage.setItem("names", names);
+
+    // Go to scoreboard
+    scoreBoard(scores, names);
 }
 
 // Build Scoreboard
-var scoreBoard = function() {
+var scoreBoard = function(scores, names) {
+    var scoreBoardLen = scores.length;
 
+    for (i=0;i<scoreBoardLen;i++) {
+        console.log(scores[i] + " " + names[i]);
+    }
+}
+
+// Get existing names from local storage
+var getNames = function(name) {
+
+    localStgNames = localStorage.getItem("names");
+    // If names is empty, set to empty array
+    if (!names) {
+        names = [];
+    }
+    
+    // Push name onto array
+    names.push(name);
+
+    return names;
+}
+
+// Get existing scores from local storage
+var getScores = function(score) {
+    
+    localStgScores = localStorage.getItem("scores");
+    // If scores is empty, set to empty array
+    if (!scores) {
+        scores = [];
+    }
+    // Push score onto array
+    scores.push(score);
+
+    return scores;
 }
 
 // Create question object
@@ -187,7 +233,7 @@ var startQuiz = function(event) {
     getQuestion(questionCount);
 }
 
-// Retry quiz
+// End of quiz
 var quizEnd = function() {
     // Display score
     questionHeadlinEl.textContent = "Your Score: " + score;
@@ -203,19 +249,31 @@ var quizEnd = function() {
     questionBodyEl.appendChild(formEl);
 
     // Add input and submit button
-    formEl.innerHTML += "<input class='form-input' type='text' name='initials' placeholder='Enter Initials'>";
+    formEl.innerHTML += "<input class='form-input' type='text' name='form-input' placeholder='Enter Initials'>";
     formEl.innerHTML += "<br />";
     formEl.innerHTML += "<button class='form-button' id='go-back'>Go Back</button>";
-    formEl.innerHTML += "<button class='form-button' id='submit-score'>Submit</button>";
+    formEl.innerHTML += "<button class='form-button' type='submit'>Submit</button>";
 
     // Add event listeners to form buttons
-    document.querySelector("#go-back").addEventListener("click", function() {
-        location.reload();
+    document.querySelector("#go-back").addEventListener("click", quizReset);
+    document.querySelector("#submit-score").addEventListener("submit", function(event) {
+        event.preventDefault();
+        
+        // Get form input
+        var name = document.querySelector("input[name='form-input']").value;
+
+        // Submit score function call
+        submitScore(score, name);
     });
-    document.querySelector("#submit-score").addEventListener("click", submitScore);
 }
 
-// Store score in local storage
+// Rest Quiz
+var quizReset = function() {
+    questionHeadlinEl.textContent = "Coding Quiz Challenge";
+    questionBodyEl.textContent = "Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!";
+    document.querySelector("main").appendChild(quizStartEl);
+    footerHeadlineEl.remove();
+}
 
 // Event handlers for buttons
 quizStartEl.addEventListener("click", startQuiz); // Quiz Start
